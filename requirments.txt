@@ -1,0 +1,8 @@
+pyttsx3
+speechRecognition
+wikipedia
+selenium
+pillow
+requests
+bs4
+PyAudio
