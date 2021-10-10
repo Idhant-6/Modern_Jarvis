@@ -13,6 +13,8 @@ from PIL import Image, ImageGrab
 import requests
 from bs4 import BeautifulSoup
 import psutil
+import pywhatkit
+import pyautogui
 
 # ALL LISTS
 hello = ['Hi There', 'Hi', 'Hello', 'Hello! I am Jarvis!']
@@ -247,9 +249,22 @@ if __name__ == "__main__":
             speak('opening scratch Sir')
             webbrowser.open("https://scratch.mit.edu")
 
-        elif 'open whatsapp' in query:
-            speak('opening whatsapp Sir')
-            webbrowser.open("web.whatsapp.com")
+        if "send message" in query or "whatsapp" in query or "open whatsapp" in query:
+            speak("Whom do you want to send message??")
+            speak("Enter number here: ")
+            mobnum = input()
+            num = mobnum
+            speak("What messege do you want to send??")
+            mes = takeCommand().lower()
+            time.sleep(5)
+            speak("What time: ")
+            hr = int(input("Hour: "))
+            mins = int(input("Min: "))
+            pywhatkit.sendwhatmsg(f"+91 {num}", mes, hr, mins, 10, False, 10)
+            if 1:
+                pyautogui.click(x=1865, y=965, clicks=1)
+            if True:
+                speak("Messege sent!")
 
         elif 'open facebook' in query:
             speak('opening facebook Sir')
