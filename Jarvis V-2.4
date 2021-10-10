@@ -229,13 +229,19 @@ if __name__ == "__main__":
         elif 'where are you' in query:
             speak('I am here only...')
 
-        elif 'open youtube' in query:
-            speak('opening youtube Sir')
-            webbrowser.open("https://www.youtube.com")
+        if "open youtube" in query:
+            speak("Opening YouTube")
+            speak("What should I search in YouTube?")
+            cm = takeCommand().lower()
+            speak(f'Searching {cm} in YouTube')
+            webbrowser.open(f"https://www.youtube.com/results?search_query={cm}")
 
-        elif 'open google' in query:
-            speak('opening google sir')
-            webbrowser.open("https://www.google.com")
+        if "open google" in query:
+            speak("Opening Google")
+            speak("What should I search in Google?")
+            cm = takeCommand().lower()
+            speak(f'Searching {cm} in Google')
+            webbrowser.open(f"https://www.google.com/search?query={cm}")
 
         elif 'open scratch' in query:
             speak('opening scratch Sir')
