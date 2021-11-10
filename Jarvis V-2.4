@@ -1,7 +1,9 @@
 import pyttsx3
+from requests.api import put
 import speech_recognition as sr 
 import datetime
 import wikipedia 
+import sys
 import webbrowser   
 import os
 import smtplib
@@ -13,7 +15,8 @@ from PIL import Image, ImageGrab
 import requests
 from bs4 import BeautifulSoup
 import psutil
-import pywhatkit
+import cv2
+import speedtest
 import pyautogui
 
 # ALL LISTS
@@ -24,7 +27,7 @@ activation = ['Jarvis Activated Sir!', 'Jarvis Activated Successfully Sir!', 'An
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 # print(voices[0].id)
-engine.setProperty('voice', voices[3].id)
+engine.setProperty('voice', voices[2].id)
 
 
 def speak(audio):
@@ -61,20 +64,21 @@ def takeScreenshot():
     image.save('C:\\Users\\idhant\\OneDrive\\Desktop\\Demo')
     prispk("Screenshot Taken Sir!")
 
+def getIP():
+    """Is used to Grab Your Pc's IP Address"""
+    import socket
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
+    prispk("Your Computer Name is: " + hostname)
+    prispk("Your Computer's IP Address is: " + IPAddr)
+
+
 
 def takeCommand():
     """Is Used to take microphone input from the user and return string output"""
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        r.pause_threshold = 1
-        audio = r.listen(source)
-
-def takeAnswer():
-    """Is Used to take microphone input from the user and return string output"""
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening Your Answer...")
         r.pause_threshold = 1
         audio = r.listen(source)
 
@@ -85,7 +89,7 @@ def takeAnswer():
 
     except Exception as e:
         # print(e)
-        print("What do You Mean Sir?")
+        prispk("What do You Mean Sir?")
         return "None"
     return query
 
@@ -95,16 +99,22 @@ def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login('[YOUR EMAIL HERE]', '[YOUR PASSWORD HERE]')
-    server.sendmail('[YOUR EMAIL HERE]', to, content)
+    server.login('[YOUR EMAIL HERE]', '[PASSWORD HERE]')
+    server.sendmail('[EMAIL HERE]', to, content)
     server.close()
 
 def showBatteryOptions():
+    """Is Used to Tell About Your Battery Level NOTE:- This Feature is only for laptops as they only run on Battries"""
     battery_detecting = psutil.sensors_battery()
     plugged = battery_detecting.power_plugged
     percent_battery = str(battery_detecting.percent)
     plugged = "Plugged In" if plugged else "Not Plugged In"
-    prispk(percent_battery+'% | '+plugged)
+    if plugged == "Not Plugged In": 
+        left_or_not = "Battery Left"
+    else:
+        left_or_not = "Battery"
+    prispk(f"Sir Your {left_or_not} Is {percent_battery}% And {plugged}")
+
 
 def make_file(path, name):
     final_path = f"{path}\{name}"
@@ -130,17 +140,6 @@ if __name__ == "__main__":
         elif 'wake up' in query or 'wakeup' in query:
             prispk(random.choice(activation))
 
-        elif 'what is' in query:
-            time.sleep(1.5)
-            speak('I am Searching For This in Google Sir...')
-            query = query.replace("what is", "What is")
-            browser = webdriver.Chrome('chromedriver.exe')
-            browser.maximize_window()
-            window_open = True
-            browser.get('https://www.google.com')
-            search = browser.find_element_by_name('q')
-            search.send_keys(query)
-            search.send_keys(Keys.ENTER)
 
         elif 'meaning' in query:
             time.sleep(1.5)
@@ -177,7 +176,7 @@ if __name__ == "__main__":
             url = f"https://www.google.com/search?q={search}"
             r = requests.get(url)
             data = BeautifulSoup(r.text, "html.parser")
-            temp = data.find("div",class_= "BNeawe")
+            temp = data.find("class",class_= "BNeawe")
             speak(f"Current {search}, is {temp}. Hope You're Good to Go Sir!")            
 
         elif 'sign in' in query:
@@ -188,7 +187,7 @@ if __name__ == "__main__":
             browser.maximize_window()
             browser.get('https://www.facebook.com')
             fill = browser.find_element_by_id('email')
-            fill.send_keys("007idhantsingh@gmail.com")
+            fill.send_keys()
             # fill.send_keys(Keys.ENTER)
             password = browser.find_element_by_id("pass")
             password.send_keys("idhant@007")
@@ -222,49 +221,28 @@ if __name__ == "__main__":
         elif 'thank you' in query:
             speak('Your Very Very Welcome')
 
-        elif 'play perfect ' in query:
-            perfect_music_dir = 'C:\\Users\\Admin\\Music\\English Songs\\Perfect (Official Music Video).mp3'
-            songs = os.listdir(perfect_music_dir)
-            print(songs)
-            os.startfile(os.path.join(perfect_music_dir, songs[0]))
-
         elif 'where are you' in query:
             speak('I am here only...')
 
-        if "open youtube" in query:
-            speak("Opening YouTube")
-            speak("What should I search in YouTube?")
-            cm = takeCommand().lower()
-            speak(f'Searching {cm} in YouTube')
-            webbrowser.open(f"https://www.youtube.com/results?search_query={cm}")
+        elif 'open youtube' in query:
+            speak('Opening Youtube Sir')
+            speak("Sir What Should I search on Youtube??")
+            query_youtube = takeCommand()
+            webbrowser.open(f'https://www.youtube.com/results?search_query={query_youtube}')
 
-        if "open google" in query:
-            speak("Opening Google")
-            speak("What should I search in Google?")
-            cm = takeCommand().lower()
-            speak(f'Searching {cm} in Google')
-            webbrowser.open(f"https://www.google.com/search?query={cm}")
-
+        elif 'open google' in query:
+            speak("Opening Google Sir")
+            speak("Sir What Should I search on Google??")
+            query_google = takeCommand()
+            webbrowser.open(f"https://www.google.com/search?q={query_google}")
+    
         elif 'open scratch' in query:
             speak('opening scratch Sir')
             webbrowser.open("https://scratch.mit.edu")
 
-        if "send message" in query or "whatsapp" in query or "open whatsapp" in query:
-            speak("Whom do you want to send message??")
-            speak("Enter number here: ")
-            mobnum = input()
-            num = mobnum
-            speak("What messege do you want to send??")
-            mes = takeCommand().lower()
-            time.sleep(5)
-            speak("What time: ")
-            hr = int(input("Hour: "))
-            mins = int(input("Min: "))
-            pywhatkit.sendwhatmsg(f"+91 {num}", mes, hr, mins, 10, False, 10)
-            if 1:
-                pyautogui.click(x=1865, y=965, clicks=1)
-            if True:
-                speak("Messege sent!")
+        elif 'open whatsapp' in query:
+            speak('opening whatsapp Sir')
+            webbrowser.open("https://web.whatsapp.com")
 
         elif 'open facebook' in query:
             speak('opening facebook Sir')
@@ -276,7 +254,7 @@ if __name__ == "__main__":
 
         elif 'open twitter' in query:
             speak('opening twitter')
-            webbrowser.open("twitter.com")
+            webbrowser.open("https://www.twitter.com")
 
         elif 'ok' in query:
             speak('sure')
@@ -292,11 +270,15 @@ if __name__ == "__main__":
 
         elif 'quiz' in query:
             speak('Tell me, Who is the Smartest Person in the World.')
-            user_answer = takeAnswer()
+            user_answer = takeCommand()
             if 'Jarvis' in user_answer:
                 speak('Right answer')
             else:
                 speak('Wrong Answer')
+
+        elif 'ip' in query:
+            ip = getIP()
+            prispk(ip)
 
         elif 'play music' in query:
             music_dir = 'C:\\Users\\Admin\\Music\\English Songs'
@@ -369,12 +351,76 @@ if __name__ == "__main__":
 
         elif 'make' in query and 'file' in query:
             speak("Please Tell Me The Path that You Want to Make A File!\n")
-            path = takeAnswer()
+            path = takeCommand()
             if 'desktop' in path:
                 file_path = 'C:\\Users\\idhant\\OneDrive\\Desktop\\'
             elif 'input' in path:
                 file_path = input("File Path Sir...\n")
             speak("Please Tell Me The Name Of The File You Want To Create!\n")
-            file_name = takeAnswer()
+            file_name = takeCommand()
             make_file(file_path, file_name)
             prispk("File Made Successfully Sir!")  
+
+        elif 'camera' in query:            
+            cap = cv2.VideoCapture(0)
+            count = 0
+            b = random.randint(1, 10000)
+            while True:
+                ret, img = cap.read()
+                cv2.imshow("Camera", img)
+                if not ret:
+                    break
+                k = cv2.waitKey(50)
+                if k % 256 == 27:
+                    print("Closing Camera")
+                    break
+
+                if k % 256 == 32:
+                    speak("Say Cheeeeeese..")
+                    time.sleep(1)
+                    speak("Picture saved")
+                    file = r'Pictures\img' + str(count) + str(b) + '.jpeg'
+                    cv2.imwrite(file, img)
+                    count += 1
+            cap.release()
+            cv2.destroyAllWindows()     
+
+        elif 'internet' in query and 'speed' in query:
+            # st = speedtest.Speedtest()
+            # speak("Testing Your Internet Speed Sir!")
+            # dl = st.download()
+            # up = st.upload()
+            # prispk(f'Download Speed is: {dl} Bits Per Second And Your upload speed is {up} Bits Per Second')
+            speedtest_path = "C:\\Program Files\\Ookla Speedtest CLI\\speedtest.exe"
+            speak("Checking Your Internet Speed Sir!")
+            os.startfile(speedtest_path)
+
+        elif 'music' in query:
+            speak("Sir, Where Do You Want To Listen Music From??")
+            user_choice = takeCommand()
+            if "youtube" in user_choice:
+                speak("Playing Music From Youtube Sir")
+            elif "spotify" in user_choice:
+                speak("Playing Music From Spotify Sir")
+            elif "local" in user_choice:
+                speak("Playing Music From The Local Dirctory Sir")
+
+            
+        elif 'download' in query and 'youtube' in query:
+            speak("Sir, Please Give Me the Link Of the Video You Want To Download From Youtube")
+            video_link = input("Your Video Link Here: ")
+            webbrowser.open(video_link)
+            time.sleep(5)
+            pyautogui.moveTo(1138, 189, 1)
+            pyautogui.click()
+            pyautogui.moveTo(1284, 384, 1)
+            pyautogui.click()
+            time.sleep(1)
+            pyautogui.press('enter')
+            speak("Sir, The Video Downloading is Started!")
+            pyautogui.hotkey('win', 'e')
+            
+
+        elif 'stop' in query or 'goodbye' in query:
+            speak("Good Byee Sir!, Hope You Have A Good Day!")
+            sys.exit()
