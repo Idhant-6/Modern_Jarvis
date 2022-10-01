@@ -1,0 +1,85 @@
+import pyttsx3
+import speech_recognition as sr
+import datetime
+import wikipedia
+import webbrowser
+import os
+
+
+def WishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good Morning!")
+
+    elif hour>=12 and hour<18:
+        speak("Good Afternoon!")
+
+    else:
+        speak("Good Evening!")
+    speak("I am GOTHIC sir. How may I help you ?")
+
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 0.7
+        audio = r.listen(source)
+
+    try:
+        print("Recognising, this could take a moment...")
+        query = r.recognize_google(audio, language='en-in')
+        print("User said: ", query)
+
+    except Exception as e:
+        print(e)
+        print("Say that again...")
+        return "None"
+    return query
+def speak(audio):
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voices',voices[1].id)
+    engine.say(audio)
+    engine.runAndWait()
+
+if __name__ == "__main__":
+    WishMe()
+    while True:
+        query = takeCommand().lower()
+
+        if 'wikipedia' in query:
+            speak("Searching wikipedia...")
+            query = query.replace("wikipedia","")
+            results = wikipedia.summary(query, sentences = 2)
+            speak("According to wikipedia")
+            print(results)            
+            speak(results)
+
+        elif 'open youtube' in query:
+            webbrowser.open('youtube.com')
+
+        elif 'open google' in query:
+            webbrowser.open('google.com')
+
+        elif 'open stackoverflow' in query:
+            webbrowser.open('stackoverflow.com')
+
+        elif 'open python' in query:
+            codePath = "C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python38-32\\pythonw.exe"
+            os.startfile(codePath)
+
+        elif 'open word' in query:
+            codePath = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Microsoft Office 2013"
+            os.startfile(codePath)
+            
+        elif 'open chrome' in query:
+            codePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+            os.startfile(codePath)
+
+        elif 'open vs code' in query:
+            codePath = "C:\\Users\\HP\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            os.startfile(codePath)
+
+        elif 'what does gothic mean' in query:
+            speak("GOTHIC is the acronym for Google-Oriented Text Heeding and Interpreting Code. Widely used to display Google search results and opening sites and applications, I am also used for displaying date and time.")
+            print("GOTHIC is the acronym for Google Oriented Text Heeding and Interpreting Code. Widely used to display Google search results and opening sites and applications, I am also used for displaying date and time.")
