@@ -119,6 +119,25 @@ def showBatteryOptions():
 def make_file(path, name):
     final_path = f"{path}\{name}"
     os.mkdir(final_path)
+    
+def showNews():
+    query_params = {
+    "source": "bbc-news",
+    "sortBy": "top",
+    "apiKey": "d14ab386a383450fa57f83ac75cb2f01"
+    }
+    main_url = " https://newsapi.org/v1/articles"
+
+    res = requests.get(main_url, params=query_params)
+    open_bbc_page = res.json()
+    article = open_bbc_page["articles"]
+    results = []
+    
+    for ar in article:
+        results.append(ar["title"])
+        
+    for i in range(len(results)):
+        prispk(i + 1, results[i])
 
 
 if __name__ == "__main__":
@@ -420,6 +439,8 @@ if __name__ == "__main__":
             speak("Sir, The Video Downloading is Started!")
             pyautogui.hotkey('win', 'e')
             
+         elif 'news' in query:
+            showNews()
 
         elif 'stop' in query or 'goodbye' in query:
             speak("Good Byee Sir!, Hope You Have A Good Day!")
