@@ -18,6 +18,7 @@ import psutil
 import cv2
 import speedtest
 import pyautogui
+from art.py import logo
 
 # ALL LISTS
 hello = ['Hi There', 'Hi', 'Hello', 'Hello! I am Jarvis!']
@@ -141,6 +142,7 @@ def showNews():
 
 
 if __name__ == "__main__":
+    print(logo)
     wishMe()
     while True:
         query = takeCommand().lower()
