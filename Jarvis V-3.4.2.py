@@ -62,7 +62,7 @@ def takeScreenshot():
     """Is Used to Take Screenshot! and then opens the picture to Show What is taken!"""
     image = ImageGrab.grab()
     image.show()
-    image.save('C:\\Users\\idhant\\OneDrive\\Desktop\\Demo')
+    image.save('[Path to Folder]')
     prispk("Screenshot Taken Sir!")
 
 def getIP():
