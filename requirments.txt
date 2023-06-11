@@ -7,3 +7,5 @@ requests
 bs4
 PyAudio
 psutil
+opencv-python
+pyautogui
