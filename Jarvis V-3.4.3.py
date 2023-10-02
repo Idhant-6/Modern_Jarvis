@@ -211,7 +211,7 @@ if __name__ == "__main__":
             fill.send_keys()
             # fill.send_keys(Keys.ENTER)
             password = browser.find_element_by_id("pass")
-            password.send_keys("idhant@007")
+            password.send_keys("[your passoword]")
             fill.send_keys(Keys.ENTER)
             sign_in = True
             print("Sign in Succesful Sir!")
@@ -443,7 +443,31 @@ if __name__ == "__main__":
             
          elif 'news' in query:
             showNews()
-
+             
+         elif 'generate' in query and 'password' in query:
+            if __name__ == "__main__":
+                s1 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','o','p','q','r','s','t','u','v','w','x','y','z']
+                s2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+                s3 = ['1','2','3','4','5','6','7','8','9','0']
+                s4 = ['!','@','#','$','%','^','&','*','(',')','_','+','{','}','|','[',']','"',';','<','>','?','/',',']
+            
+                passLen = int(input("Enter Your password lenght: "))
+                s = []
+                s.extend(s1)
+                s.extend(s2)
+                s.extend(s3)
+                s.extend(s4)
+                a =0
+                print("Choose any one of the 5 passwords given below!")
+                print("")
+                while a<5:
+                    random.shuffle(s)
+                    print("\t","".join(s[0:passLen]))
+                    a=a+1
+            speak("Password created Sir!")
+             
         elif 'stop' in query or 'goodbye' in query:
             speak("Good Byee Sir!, Hope You Have A Good Day!")
             sys.exit()
+
+       
