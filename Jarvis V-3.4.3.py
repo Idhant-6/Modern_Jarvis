@@ -211,7 +211,7 @@ if __name__ == "__main__":
             fill.send_keys()
             # fill.send_keys(Keys.ENTER)
             password = browser.find_element_by_id("pass")
-            password.send_keys("idhant@007")
+            password.send_keys("[your passoword]")
             fill.send_keys(Keys.ENTER)
             sign_in = True
             print("Sign in Succesful Sir!")
@@ -444,7 +444,7 @@ if __name__ == "__main__":
          elif 'news' in query:
             showNews()
              
-         elif 'password' in query or 'generate' in query:
+         elif 'generate' in query and 'password' in query:
             if __name__ == "__main__":
                 s1 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','o','p','q','r','s','t','u','v','w','x','y','z']
                 s2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
