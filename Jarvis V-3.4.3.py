@@ -441,10 +441,10 @@ if __name__ == "__main__":
             speak("Sir, The Video Downloading is Started!")
             pyautogui.hotkey('win', 'e')
             
-         elif 'news' in query:
+        elif 'news' in query:
             showNews()
              
-         elif 'generate' in query and 'password' in query:
+        elif 'generate' in query and 'password' in query:
             if __name__ == "__main__":
                 s1 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','o','p','q','r','s','t','u','v','w','x','y','z']
                 s2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
