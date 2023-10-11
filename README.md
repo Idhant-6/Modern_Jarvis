@@ -43,3 +43,9 @@ Feel free to explore and extend Jarvis's functionality by modifying the source c
 We welcome feedback and contributions to enhance Jarvis's capabilities. If you have any ideas or improvements, please share them with us.
 
 Thank you for using Modern Jarvis! ✨
+
+
+## Tools and Languages:
+[<img src="https://cdn.iconscout.com/icon/free/png-256/python-3521655-2945099.png" width="40px" />](https://www.python.org/) &nbsp;&nbsp;
+[<img alt="Visual Studio Code" src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_vscode_icon_130084.png" width="40px" />](https://code.visualstudio.com/) &nbsp;&nbsp;
+[<img alt="Github" src="https://cdn.freebiesupply.com/logos/large/2x/github-icon-logo-png-transparent.png" width="45px" />](https://code.visualstudio.com/)
