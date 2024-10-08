@@ -2,7 +2,7 @@
 
 Jarvis is your personal assistant, designed to assist you with various tasks and provide useful information. It's a Python-based AI-powered assistant capable of performing a wide range of functions. Below, you'll find a brief overview of Jarvis's capabilities and how to interact with it.
 
-## Features
+## Features:
 - **Voice Interaction**: Jarvis can understand and respond to voice commands.
 - **Web Browsing**: Open websites like Google, YouTube, Facebook, and more using voice commands.
 - **Wikipedia Search**: Retrieve information from Wikipedia by simply asking.
