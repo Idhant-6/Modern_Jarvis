@@ -15,14 +15,14 @@ Jarvis is your personal assistant, designed to assist you with various tasks and
 - **Internet Speed**: Check your internet speed using the Ookla Speedtest CLI.
 - **Generate Passwords**: Create strong passwords with various character sets.
 
-## Getting Started
+## Getting Started:
 
 1. Make sure you have Python and the required libraries installed.
 2. Clone this repository or download the source code.
 3. Download the requirements.txt for the Requirements of the Project.
 4. Run the `jarvis.py` file in your preferred Python environment.
 
-## How to Use
+## How to Use:
 
 1. Launch Jarvis by running the `jarvis.py` script.
 2. Wait for the activation sound or message to start giving commands.
@@ -38,7 +38,7 @@ Jarvis is your personal assistant, designed to assist you with various tasks and
 
 Feel free to explore and extend Jarvis's functionality by modifying the source code.
 
-## Feedback and Contributions
+## Feedback and Contributions:
 
 We welcome feedback and contributions to enhance Jarvis's capabilities. If you have any ideas or improvements, please share them with us.
 
