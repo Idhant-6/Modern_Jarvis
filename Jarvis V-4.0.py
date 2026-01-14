@@ -1,6 +1,5 @@
 """
 Intelligent Voice Assistant (Jarvis-like)
-Polished & cleaned version for Class XII Computer Science Project
 
 Features:
 - Speech I/O (pyttsx3 + speech_recognition)
@@ -663,3 +662,4 @@ if __name__ == "__main__":
         prispk("Program interrupted by user. Exiting gracefully.")
     except Exception as e:
         prispk("An unexpected error occurred:", e)
+
